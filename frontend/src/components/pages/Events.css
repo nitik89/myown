@@ -1,0 +1,22 @@
+
+.heading{
+    font-weight:700;
+   
+}
+.subheading{
+    font-size:30px !important;
+    
+}
+.spanner{
+    background:linear-gradient(145deg, #673AB7 ,#9c27B0);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.check{
+    color:blue;
+}
+
+.background{
+    background:linear-gradient(145deg, #673AB7 ,#9c27B0);
+    
+}

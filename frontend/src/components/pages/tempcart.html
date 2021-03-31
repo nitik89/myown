@@ -1,0 +1,94 @@
+<form className="container" >
+         
+    <div className="form-group">
+      <input
+      type="text"
+        name="firstname"
+        className="form-control"
+        placeholder="Firstname"
+        onChange={(event)=>{handleChange(event)}}
+        value={firstname}
+     
+      />
+    </div>
+    <div className="form-group">
+      <input
+      type="text"
+        name="lastname"
+        className="form-control"
+        placeholder="Lastname"
+        onChange={(event)=>{handleChange(event)}}
+        value={lastname}
+
+     
+      />
+    </div>
+    <div className="form-group">
+      <input
+      type="text"
+        name="rollno"
+        className="form-control"
+        placeholder="Rollno For Ex:1809185"
+        onChange={(event)=>{handleChange(event)}}
+        value={rollno}
+     
+      />
+    </div>
+    <div className="form-group">
+      <input
+      type="text"
+        name="contact_no"
+        className="form-control"
+        placeholder="Contact no"
+        onChange={(event)=>{handleChange(event)}}
+        value={contact_no}
+     
+      />
+    </div>
+    
+    
+    <div className="form-group">
+      <input
+      type="email"
+        name="email"
+        className="form-control"
+        placeholder="Email"
+        onChange={(event)=>{handleChange(event)}}
+        value={email}
+     
+      />
+    </div>
+    <div className="form-group">
+      <input
+      type="password"
+        name="password"
+        className="form-control"
+        placeholder="Password"
+        onChange={(event)=>{handleChange(event)}}
+        value={password}
+      />
+    </div>
+
+  
+    <div className="form-group">
+      <select
+        
+        className="form-control"
+        placeholder="Year"
+        name="year"
+        onChange={(event)=>{handleChange(event)}}
+        value={year}
+      >
+        <option>Year</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    
+    
+    <button type="submit"  className="btn btn-block btn-outline-success" onClick={onSubmit}>
+      Signup
+    </button>
+  </form>
