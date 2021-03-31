@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../App'
 import Base from '../basic/Base'
-import Particles from 'react-particles-js';
+
 import {Link, NavLink} from 'react-router-dom';
 import Menu from '../basic/Menu';
 function Home() {
