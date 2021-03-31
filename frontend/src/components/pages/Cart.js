@@ -51,7 +51,7 @@ function Cart() {
             alert('Razor pay SDK failed');
             return 
         }
-        const data = await fetch(`${API}razorpay/${user._id}`, { method: 'POST', headers: {
+        const data = await fetch(`/api/razorpay/${user._id}`, { method: 'POST', headers: {
             Accept: "application/json",
             "Authorization":`Bearer ${token}`,
             "Content-Type": "application/json"
@@ -75,7 +75,7 @@ function Cart() {
 			description: 'Thank you for registering in the events',
 			
 			handler: function (response) {
-               fetch(`${API}verification/${user._id}`,{method:"POST",headers:{
+               fetch(`/api/verification/${user._id}`,{method:"POST",headers:{
                     Accept: "application/json",
                     "Authorization":`Bearer ${token}`,
 
