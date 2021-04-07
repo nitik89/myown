@@ -33,10 +33,11 @@ function Cart() {
     const {state,dispatch}=useContext(UserContext);
     const [loading,setLoading]=useState(false);
     const history=useHistory();
-    
+    console.log(state);
    
     const token=localStorage.getItem("jwt");
     const cart=localStorage.getItem("cart");
+    const tempCart=cart;
     let len=0;
     if(cart){
       const mycart=JSON.parse(localStorage.getItem("cart"));
@@ -67,7 +68,7 @@ function Cart() {
     setLoading(false);
         
         const  options = {
-            key:  'rzp_test_Yax8ezEYaakoPh' ,
+            key:  'rzp_test_LiMeEbFXgq98S8' ,
 			currency: data.currency,
 			amount: data.amount.toString(),
 			order_id: data.id,
@@ -93,18 +94,32 @@ function Cart() {
                 if(ans.status=="success"){
 
                     orderMyEvents({products:state?.cart,amount: (data.amount/100).toString(),order_id:ans.order_id,payment_id:ans.payment_id},state?._id,token)
-                    .then(data=>{console.log(data)}) 
+                    .then(data=>{
+                      console.log(data.products);
+                      const evnts=user.events;
+                      console.log(evnts);
+                      data.products.map(ev=>{
+                        evnts.push(ev._id);
+                      })
+                      
+                      const newuser={...user,events:evnts};
+                      localStorage.setItem("user",JSON.stringify(newuser));
+                      dispatch({type:"UPDATETHEEVENTS",payload:evnts});
+                    });
+                   
+                   
                     dispatch({type:"CLEARCART"});
+                    
                     localStorage.removeItem("cart");
                     toast("Order is Completed");
                     setTimeout(()=>{
                      
                       history.push('/');
                     },3000);
-                    
-
-
-                }
+                  }
+                  else{
+                    toast.error("Error!! Try again")
+                  }
             })
            
 				

@@ -34,6 +34,7 @@ const Routes=()=>{
  
  const history=useHistory();
 useEffect(() => {
+    window.scrollTo(0,0);
     const user=JSON.parse(localStorage.getItem("user"));
 
     if(user){

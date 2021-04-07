@@ -8,29 +8,39 @@ var eventSchema = new mongoose.Schema({
         trim: true
 
     },
-    location: {
-        type: String,
-        required: true,
-    },
+    
 
     price: {
         type: Number,
         required: true
 
     },
-    numberofstudents: {
-        type: Number,
-        required: true
-    },
+  
     event_manager: {
         type: ObjectId,
         ref: "User",
 
     },
+    photo:{
+        type:String,
+        trim:true,
+        require:true
+    },
+    url:{
+        type:String
+    },
+   
     datetime: {
         type: Date,
         required: true
 
+    },
+    duration:{
+        type:String
+    },
+    active:{
+        type:Boolean,
+        default:true
     },
     enrolledStudents: [{
         type: ObjectId,

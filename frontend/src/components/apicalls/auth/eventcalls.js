@@ -25,18 +25,17 @@ export const getAllEventManagers = (userId,token) => {
 }
 
 export const createEvent = (data,userId,token) => {
-    console.log(token);
+    console.log(data);
     return fetch(`/api/addEvent/${userId}`, {
             method: "POST",
             headers: {
-                Accept: "application/json",
+               
 
-                "Content-Type": "application/json",
+                Accept: "application/json",
                 "Authorization":`Bearer ${token}`
 
             },
-            body: JSON.stringify(data)
-
+            body: data
         })
         .then(res => {
             return res.json()
@@ -94,10 +93,11 @@ export const getAllEventStudents = (userId,token) => {
     return fetch(`/api/allstudents/${userId}`, {
             method: "GET",
             headers: {
-                
+          
                 "Authorization":`Bearer ${token}`
 
             },
+           
             
 
         })
@@ -185,4 +185,42 @@ console.log(res);
         console.log(err);
     })
     
+}
+
+export const changeStats=(eventId,id,token)=>{
+     return fetch(`/api/changeStatus/${eventId}/${id}`, {
+        method: "PUT",
+        headers: {
+                
+            "Authorization":`Bearer ${token}`
+
+        },
+        body:true
+
+    })
+    .then(res => {
+console.log(res);
+        return res.json()
+    })
+    .catch(err => {
+        console.log(err);
+    }) 
+}
+export const getMe=(id,token)=>{
+    return fetch(`/api/getuser/${id}`, {
+        method: "GET",
+        headers: {
+                
+            "Authorization":`Bearer ${token}`
+
+        },
+
+    })
+    .then(res => {
+console.log(res);
+        return res.json()
+    })
+    .catch(err => {
+        console.log(err);
+    }) 
 }

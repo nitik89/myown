@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import { UserContext } from '../../App'
-import { getMyOrders } from '../apicalls/auth/eventcalls';
+import { getMe, getMyOrders } from '../apicalls/auth/eventcalls';
 import Base from '../basic/Base'
 import './Events.css';
 import './Profile.css';
@@ -10,16 +10,32 @@ function Profile() {
     const {state,dispatch}=useContext(UserContext);
     const [data,setData]=useState([]);
     const [loading,setLoading]=useState(true);
-  
+const [userdata,setUserdata]=useState({});
     const token=localStorage.getItem("jwt");
     const user=JSON.parse(localStorage.getItem("user"));
+    console.log(data);
     useEffect(()=>{
 
         if(user){
             
         if(user._id){
             setLoading(true);
+            getMe(user._id,token).then(res=>{
+                if(res){
+                if(res.error){
+                    
+                    setLoading(false);
+                }
+                else{
+                    setUserdata(res)
+                    setLoading(false);
+                }
+            }
+            })
+            setLoading(true);
+
             getMyOrders(user._id,token).then(res=>{
+                if(res){
                 if(res.error){
                     
                     setLoading(false);
@@ -28,7 +44,12 @@ function Profile() {
                     setData(res);
                     setLoading(false);
                 }
+            }
             })
+            .catch(err=>{
+                setLoading(false);
+            })
+            
         }
     }
 
@@ -67,6 +88,14 @@ function Profile() {
                                         <p class="m-b-10 f-w-600">Phone</p>
                                         <h6 class="text-muted f-w-400 spanner">{user?.contact_no}</h6>
                                     </div>
+
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Events Registered</p>
+                                       {userdata?.events?.map(evnts=>{
+                                           return  <h6 class="text-muted f-w-400 spanner">{evnts.name}</h6>
+                                       })}
+                                       
+                                    </div>
                                 </div>
                                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Payment Status</h6>
                                 <div class="row">
@@ -87,12 +116,15 @@ function Profile() {
                                       {data?.map((evnts,idx)=>{
                                          return (
                                              <>
-                                             <tr>
-                                         <th scope="row">{idx+1}</th>
-                                         <td>{evnts.status}</td> 
-                                            <td>{evnts.payment_id}</td> 
-                                            <td>Rs {evnts.amount}</td>
-                                            </tr>
+                                             {evnts.amount>0?(
+                                                 <tr>
+                                                 <th scope="row">{idx+1}</th>
+                                                 <td>{evnts.status}</td> 
+                                                    <td>{evnts.payment_id}</td> 
+                                                    <td>Rs {evnts.amount}</td>
+                                                    </tr>
+                                             ):<></>}
+                                             
                                              </>
                                          )
                                       })}

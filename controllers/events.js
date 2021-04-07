@@ -1,5 +1,23 @@
 const User = require("../models/userSchema")
+
 const Events = require('../models/eventsSchema');
+const multer=require('multer');
+const moment=require('moment');
+let DIR="./public/";
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null,DIR)
+    },
+    filename: function (req, file, cb) {
+     
+      cb(null, file.fieldname + '-' + Date.now()+ '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+    }
+  })
+
+let upload = multer({ storage: storage }).single('photo');
+
+
+
 exports.getAllEventManagers = (req, res) => {
 
     User.find({ role: 2 })
@@ -15,20 +33,32 @@ exports.getAllEventManagers = (req, res) => {
 
 exports.createEvents = (req, res) => {
     
+upload(req,res,err=>{
 
-    const { name, location, price, numberofstudents, datetime, event_manager } = req.body;
-    if(!name|| !location|| !price|| !numberofstudents|| !datetime||  !event_manager){
+    if(err){
+        return res.status(422).json({error:"An error has occured"})
+    }
+    else{
+
+
+        
+        const { name, duration, price,  datetime, event_manager,url } = req.body;
+      
+        
+    let image=req.file.filename;
+
+    if(!name|| !duration|| !price|| !datetime||  !event_manager||!url){
         return res.status(422).json({error:"Please fill all the fields"});
     }
     Events.findOne({name:name}).then((d)=>{
         if(d){
         return res.status(422).json({error:"This name already exists"});
         }
-    
+    console.log(datetime);
     let date = new Date(datetime);
-    const todaydate = date.toISOString();
+ const todaydate=date.toISOString();
    
-    const events = new Events({ name, location, price, numberofstudents, datetime: todaydate, event_manager })
+    const events = new Events({ name, duration, price, datetime: todaydate, event_manager,photo:image,url })
     
 
     events.save().then(result => {
@@ -43,20 +73,53 @@ exports.createEvents = (req, res) => {
         console.log(err);
     })
 })
+       
+    }
+})
+    
 }
-
+exports.changeStatus=(req,res)=>{
+    const id=req.params.EventId;
+   
+    Events.findOne({_id:id}).then((data)=>{
+        
+        if(!data){
+            return res.status(400).json({ error: "Not able to find event" });
+        }
+    
+        const {active}=data;
+      
+        const changed=!active;
+        
+        Events.updateOne({_id:id},{$set:{active:changed}},{new:true}).exec((err,data)=>{
+     
+            if(err){
+                return res.status(400).json({error:"Could not update the status"})
+            }
+            if(data){
+                return res.json({message:"Changed"});
+            }
+        })
+    })
+}
 exports.getAllEvents = (req, res) => {
    
     Events.find().lean().populate("event_manager").exec((err, cat) => {
         if (err) {
-            return res.status(400).json({ error: "Not able to find categpries" });
+            return res.status(400).json({ error: "Not able to find event" });
         }
 
         const data = cat.map(evnts => {
             const date = new Date(evnts.datetime);
-            const hrs = date.getUTCHours();
+            const dt=date.getUTCDate().toString();
+            const hrs = date.getUTCHours().toString();
+            const minutes=date.getUTCMinutes().toString();
+            const month=date.getUTCMonth().toString();
+            const year=date.getUTCFullYear().toString();
 
-            return {...evnts, hrs };
+            const fulldate=hrs+":"+minutes+" "+dt+"-"+month+"-"+year;
+       
+            return {...evnts, fulldate };
         })
 
 
@@ -72,10 +135,17 @@ exports.getEventById = (req, res) => {
             return res.status(400).json({ error: "Not able to find the event" })
         }
         const { datetime } = event;
-        const date = new Date(datetime);
-        const hrs = date.getUTCHours();
-        const minutes = date.getUTCMinutes();
-        const fulldate = hrs + ":" + minutes;
+        
+        const fulldate=moment(datetime).format("h:mm a MMM DD, YYYY") 
+        console.log(fulldate)
+        
+      
+      
+        
+
+        
+        
+       
         const data = {...event, fulldate }
         return res.json(data);
 

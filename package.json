@@ -3,11 +3,11 @@
     "version": "1.0.0",
     "main": "app.js",
     "scripts": {
-        "start":"node app.js",
+        "start": "node app.js",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
     },
-    "engines":{
-        "node":"14.16.0"
+    "engines": {
+        "node": "14.16.0"
     },
     "keywords": [],
     "author": "",
@@ -26,8 +26,10 @@
         "i": "^0.3.6",
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.15",
+        "moment": "^2.29.1",
         "mongoose": "^5.7.7",
         "morgan": "^1.9.1",
+        "multer": "^1.4.2",
         "nodemon": "^1.19.4",
         "npm": "^6.13.0",
         "razorpay": "^2.0.6",

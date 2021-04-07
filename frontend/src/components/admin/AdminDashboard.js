@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App'
 import Base from '../basic/Base';
@@ -6,6 +6,9 @@ import './Admin.css';
 
 function AdminDashboard() {
     const {state,dispatch}=useContext(UserContext);
+    useEffect(()=>{
+        window.scrollTo(0, 0)
+    },[])
     const adminLeftSide=()=>{
         return (
             <div class="card text-white  mb-3 offset-1" >

@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { getEventById } from '../apicalls/auth/eventcalls';
 import Base from '../basic/Base';
 import './Events.css';
@@ -7,6 +7,7 @@ import { UserContext } from '../../App';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../basic/button.css';
+import { orderMyEvents } from '../../helper/carthellper';
 
 function EventsDetail() {                                             
    const {eventid} =useParams();
@@ -15,24 +16,48 @@ function EventsDetail() {
    const user=JSON.parse(localStorage.getItem("user"));
    const token=localStorage.getItem("jwt");
    const [loading,setLoading]=useState(false);
+   const history=useHistory();
+
    let error=0;
    let cart=state?.cart?state.cart:[];
-   
+  console.log(details);
     useEffect(()=>{
        setLoading(true);
         getEventById(eventid,user._id,token).then(data=>{
           
             setDeatils(data);
+            if(details){
 
             setLoading(false);
             toast("Fetched Successfully");
+            }
+           
         }).catch(err=>{
 
           setLoading(false);
           toast.error("Couldn't fetch try a refersh");
           
         })
-    },[eventid])
+    },[])
+
+    const registerMe=(eventId)=>{
+  const data=[];
+  data.push(details);
+          orderMyEvents({products:data},user._id,token).then(res=>{
+              if(res.status=="Recieved"){
+                  toast("Registered Successfully");
+                  setTimeout(()=>{
+                           
+                      history.push('/');
+                    },3000);
+      
+              }
+              else{
+                  toast.error("Could not register");
+              }
+              
+          })
+      }
 
     const addToCart = (id)=>{
     
@@ -73,52 +98,58 @@ function EventsDetail() {
 
 <div className="loader">Loading...</div>
 ):
-<div class="container text-warning  d-flex justify-content-center shadow-lg text-center border border-secondary w-50  background" style={{height:"auto"}}>
+<div class="container text-warning  d-flex justify-content-center shadow-lg text-center  border border-secondary  background" style={{height:"auto"}}>
   <div class="row">
    
     
   
-
-      <h5 className="text-white heading mt-2">{details?.name}</h5>
+<img src={`/${details?.photo}`} class="img-fluid p-4 rounded " />
+      <h1 className="text-white heading mt-2">{details?.name}</h1>
     
       
       
       <div class="table-responsive bg-white  mb-3 p-3 ">
-        <table class="table table-sm table-borderless ">
+        <table class="table table-sm  ">
           <tbody>
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Event Manager</strong></th>
+            
               <td>{details?.event_manager?.firstname} {details?.event_manager?.lastname}</td>
             </tr>
-            <hr/>
+          
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Contact_no</strong></th>
               <td>{details?.event_manager?.contact_no} </td>
             </tr>
-            <hr/>
+            
             <tr>
-              <th class="pl-0 w-25" scope="row"><strong>No of Students</strong></th>
-              <td>{details?.numberofstudents}</td>
+              <th class="pl-0 w-25" scope="row"><strong>Duration of Event</strong></th>
+              <td>{details?.duration} hrs</td>
             </tr>
-            <hr/>
+           
             <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Timming</strong></th>
+              <th class="pl-0 w-25" scope="row"><strong>Date and Time</strong></th>
               <td>{details?.fulldate}</td>
             </tr>
-            <hr/>
+            
             <tr>
               <th class="pl-0 w-25" scope="row"><strong>Price</strong></th>
-              <td>{details?.price}</td>
+              <td>Rs: {details?.price}</td>
             </tr>
-            <hr/>
             <tr>
-              <th class="pl-0 w-25" scope="row"><strong>Location</strong></th>
-              <td>{details?.location}</td>
+              <th class="pl-0 w-25" scope="row"><strong>More Details</strong></th>
+              <td><a href={details?.url} target="_blank" style={{color:"blue"}}> Details</a></td>
             </tr>
+            
+           
           </tbody>
         </table>
-        <button type="button" class="btn btn-light btn-lg btn-block firstbutton m-3" onClick={()=>{addToCart(details?._id)}}><i
+        {details?.price>0?(
+          <button type="button" class="btn btn-light btn-lg btn-block firstbutton m-3" onClick={()=>{addToCart(details?._id)}}><i
           class="fas fa-shopping-cart "></i>Add to cart</button>
+        ): <button type="button" class="btn btn-light btn-lg btn-block firstbutton m-3" onClick={()=>{registerMe(details?._id)}}><i
+        class="fas fa-shopping-cart "></i>Register Now</button>}
+        
       </div>
     
      

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState ,useEffect} from 'react'
 import { UserContext } from '../../App'
 import Base from '../basic/Base'
 
@@ -6,18 +6,20 @@ import {Link, NavLink} from 'react-router-dom';
 import Menu from '../basic/Menu';
 function Home() {
     const {state,dispatch}=useContext(UserContext);
-
+    useEffect(()=>{
+      window.scrollTo(0, 0)
+  },[])
     return (
         <div>
             <Base />
          
             <section id="hero">  
-      <video src="assets/img/Abstract%20-%202127.mp4" type="video/mp4" id="video" autoPlay muted loop></video>
+      <video src={"/assets/img/abs.mp4"} type="video/mp4" id="video" autoPlay muted loop></video>
     <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
         
-      <h1 class="mb-4 pb-0">The Annual<br/><span>COMPUWAVE</span> Event</h1>
-      <p class="mb-4 pb-0">Presenting Atoma on 5-12 March,2021</p>
-      <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox play-btn mb-4"></a>
+      <h1 class="mb-4 pb-0">COMPUWAVE PRESENTS<br/><span>ATOMA</span> </h1>
+      <p class="mb-4 pb-0">Presenting Atoma from 10th April,2021</p>
+      <a href="https://youtu.be/F-U5Hdh38_8" class="glightbox play-btn mb-4" target="_blank"></a>
       <a href="#about" class="about-btn scrollto">About The Event</a>
     </div>
   </section>
@@ -29,10 +31,11 @@ function Home() {
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-lg-6">
-            <h2>About The Event</h2>
-            <p>Sed nam ut dolor qui repellendus iusto odit. Possimus inventore eveniet accusamus error amet eius aut
-              accusantium et. Non odit consequatur repudiandae sequi ea odio molestiae. Enim possimus sunt inventore in
-              est ut optio sequi unde.</p>
+            <h2>About Us</h2>
+            <p>Compuwave society is a society of computer science department at 
+              Shaheed Bhagat Singh State Technical Campus Ferozepur,Punjab.
+
+            </p>
           </div>
           <div class="col-lg-3">
             <h3>Where</h3>

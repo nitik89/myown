@@ -17,7 +17,7 @@ const OrderSchema = new mongoose.Schema({
     products: [ProductCartSchema],
     order_id: String,
     payment_id:String,
-    amount: { type: Number },
+    amount: { type: Number,default:0 },
 
     status: {
         type: String,

@@ -1,7 +1,7 @@
 import React, { useContext, useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App'
-import { deleteEvents, getAllEvents } from '../apicalls/auth/eventcalls';
+import { deleteEvents, getAllEvents,changeStats } from '../apicalls/auth/eventcalls';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Base from '../basic/Base'
@@ -11,7 +11,7 @@ function ManageEvents() {
     const [managers,setManagers]=useState([]);
     const user=JSON.parse(localStorage.getItem("user"));
     const token=localStorage.getItem("jwt");
-
+console.log(managers);
     const  getManagers=()=>{
         getAllEvents(user._id,token).then(user=>{
             if(user){
@@ -22,7 +22,22 @@ function ManageEvents() {
     useEffect(() => {
         
        getManagers();
-    }, [])
+    }, []);
+    const changeStatus=(Eventid)=>{
+        changeStats(Eventid,user._id,token).then(data=>{
+if(data){
+    if(data.message){
+        const idx=managers.findIndex(evnts=>evnts._id==Eventid);
+        const what=managers[idx].active;
+        managers[idx].active=!what;
+        const newmanagers=[...managers];
+        setManagers(newmanagers);
+    }
+}
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
     const deleteEvent=(id)=>{
         deleteEvents(id,user._id,token).then(res=>{
             if(res.message==="Deleted Successfully!"){
@@ -52,6 +67,7 @@ function ManageEvents() {
   <li class="list-group-item list-group-item-light"><Link to="/admin/events/create" className="nav-link text-success"> Create Events</Link></li>
   <li class="list-group-item list-group-item-light"><Link to="/admin/events/manage" className="nav-link text-success">Manage Events</Link></li>
   <li class="list-group-item list-group-item-light"><Link to="/admin/students/event" className="nav-link text-success"> Manage Students</Link></li>
+  
 
   </ul>
    
@@ -76,8 +92,10 @@ function ManageEvents() {
                     <li class="list-group-item spanner">Rollno: <span className="badge badge-success mr-3">{evnts?.location} </span> </li>
                     <li class="list-group-item spanner"> Contact No: <span className="badge badge-danger mr-3"> {evnts?.numberofstudents} </span> </li>
                     <li class="list-group-item spanner"> Allocated Event Manager: <span className="badge badge-danger mr-3"> {evnts?.event_manager?.firstname} {evnts?.event_manager?.lastname} </span> </li>
+                    <li class="list-group-item spanner"> Event Status: csd<span className="badge badge-danger mr-3"> {evnts?.active?<p>true</p>:<p>false</p>}</span> </li>
                     <li class="list-group-item spanner"> Price: Rs<span className="badge badge-danger mr-3"> {evnts?.price} </span> </li>
                     <li class="list-group-item "> <button type="button" class="btn btn-danger" onClick={()=>{deleteEvent(evnts?._id)}}>Delete</button> </li>
+                    <li class="list-group-item "> <button type="button" class="btn btn-danger" onClick={()=>{changeStatus(evnts?._id)}}>Change Status</button> </li>
                   </ul>
 
                 )

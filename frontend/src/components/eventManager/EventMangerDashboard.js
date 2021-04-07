@@ -40,7 +40,7 @@ function EventManagerDashboard() {
                       return(<li class="list-group-item spanner">
                           Name:{evnts.name},
                           Price:{evnts.price},
-                          Location:{evnts.location}
+                         
                           </li>)
                   })}
                    </li>

@@ -9,188 +9,189 @@ import { createEvent, getAllEventManagers } from '../apicalls/auth/eventcalls';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function CreateEvents() {
-    const {state,dispatch}=useContext(UserContext);
-    const [values, setValues] = useState({
-        name: "",
-      price:"",
-      location:"",
-      numberofstudents:"",
-      event_manager:"",
-      datetime:""
-     
-     
+
+const CreateEvents = () => {
+const token=localStorage.getItem("jwt");
+const user=JSON.parse(localStorage.getItem("user"))
+
+  const [values, setValues] = useState({
+    name: "",
+    description: "",
+    price: "",
+    participants:"",
+    duration:"",
+    datetime:"",
+    photo: "",
+    managers:[],
+    event_manager: "",
+    url:"",
+  
+    
+    formData: ""
+  });
+
+  const {
+    name,
+    price,
+    duration,
+  managers,
+url,
+    event_manager,
+    participants,
+    datetime,
+    formData
+  } = values;
+
+  const preload = () => {
+    getAllEventManagers(user._id,token).then(users=>{
+      
+      setValues({ ...values,managers:users, formData: new FormData() });
+    })
+        
+      
+    
+  };
+
+  useEffect(() => {
+    preload();
+  }, []);
+
+  const onSubmit = event => {
+    event.preventDefault();
+    setValues({ ...values, error: "", loading: true });
+    createEvent( formData,user._id, token).then(data => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({
+          ...values,
+          name: "",
+          description: "",
+          price: "",
+          participants:"",
+          duration:"",
+          datetime:"",
+          photo: "",
+         url:"",
+          event_manager: "",
+        });
+      }
     });
-    const token=localStorage.getItem("jwt");
-  
-    const [managers,setManagers]=useState([]);
-    const {name,price,location,numberofstudents,event_manager,datetime}=values;
-  
-    const getAll=()=>{
-      getAllEventManagers(state?._id,token).then(users=>{
-        setManagers(users);
-      })
+  };
 
+  const handleChange = name => event => {
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    formData.set(name, value);
+    console.log(formData.get(name));
+    setValues({ ...values, [name]: value });
+  };
+
+
+
+  const createProductForm = () => (
+    <form>
+      <span>Post photo</span>
+      <div className="form-group">
+        <label className="btn btn-block btn-success">
+          <input
+            onChange={handleChange("photo")}
+            type="file"
+            name="photo"
+            accept="image"
+            placeholder="choose a file"
+          />
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          onChange={handleChange("name")}
+          name="name"
+          className="form-control"
+          placeholder="Name"
+          value={name}
+        />
+      </div>
       
-    }
+      <div className="form-group">
+        <input
+          onChange={handleChange("price")}
+          type="number"
+          name="price"
+          className="form-control"
+          placeholder="Price"
+          value={price}
+        />
+      </div>
+      <div className="form-group">
+        <input
+          onChange={handleChange("url")}
+          type="url"
+          name="url"
+          className="form-control"
+          placeholder="Url"
+          value={url}
+        />
+      </div>
+      <div className="form-group">
+        <select
+          onChange={handleChange("event_manager")}
+          className="form-control"
+          placeholder="Event Manger"
+          name="event_manager"
+        >
+          <option>Select</option>
+          {
+            managers.map((cate, index) => (
+              <option key={index} value={cate._id}>
+                {cate.firstname}
+              </option>
+            ))}
+        </select>
+      </div>
+      <div className="form-group">
+        <input
+          onChange={handleChange("datetime")}
+          type="datetime-local"
+          name="datetime"
+          className="form-control"
+          placeholder="Date time"
+          value={datetime}
+        />
+      </div>
+      <div className="form-group">
+        <input
+          onChange={handleChange("duration")}
+          type="number"
+          name="duration"
+          className="form-control"
+          placeholder="Duration"
+          value={duration}
+        />
+      </div>
 
-    useEffect(()=>{
-      getAll();
-    },[])
-  
-    const handleChange=event=>{
-     
-      setValues({...values,[event.target.name]:event.target.value})
-    }
-    const onSubmit=event=>{
-      event.preventDefault();
-      
-      createEvent( {name,price,location,numberofstudents,event_manager,datetime},state?._id,token)
-      .then(res=>{
-        if(res.message){
-          toast(res.message);
-        }
-        if(res.error){
-          toast.error(res.error);
-        }
-      })
-  
-  
-    }
-  
-      const createProductForm = () => (
-          <form className="container p-4" >
-           
-            <div className="form-group">
-              <input
-              type="text"
-                name="name"
-                className="form-control"
-                placeholder="Name of the Event"
-                onChange={(event)=>{handleChange(event)}}
-                value={name}
-             
-              />
-            </div>
-            <div className="form-group">
-              <input
-              type="number"
-                name="price"
-                className="form-control"
-                placeholder="Price"
-                onChange={(event)=>{handleChange(event)}}
-                value={price}
-  
-             
-              />
-            </div>
-            <div className="form-group">
-              <input
-              type="text"
-                name="location"
-                className="form-control"
-                placeholder="Location"
-                onChange={(event)=>{handleChange(event)}}
-                value={location}
-             
-              />
-            </div>
-            <div className="form-group">
-              <input
-              type="number"
-                name="numberofstudents"
-                className="form-control"
-                placeholder="Max of Participants"
-                onChange={(event)=>{handleChange(event)}}
-                value={numberofstudents}
-             
-              />
-            </div>
-            
-        
-            <div className="form-group">
-              <input
-              type="datetime-local"
-                name="datetime"
-                className="form-control"
-               placeholder="Date and Time"
-                onChange={(event)=>{handleChange(event)}}
-                value={datetime}
-              />
-            </div>
-        
-          
-            <div className="form-group">
-              <select
-                
-                className="form-control"
-                name="event_manager"
-                placeholder="Event Managers"
-                onChange={(event)=>{handleChange(event)}}
-               
-              >
-                <option>Select the manager</option>
-               {managers.map(mng=>{
-                 return <option value={mng._id}>{mng.firstname} {mng.lastname}</option>
-               })}
-              </select>
-            </div>
-            
-            
-            <button type="submit"  className="btn btn-block btn-success" onClick={onSubmit}>
-              Add Event Manager
-            </button>
-          </form>
-        );
-    const adminLeftSide=()=>{
-        return (
-            <div class="card text-white  mb-3 offset-1" >
-      
-  <div class="card-header bg-success">Choose Any Option</div>
-  <div class="card-body">
-  <ul class="list-group">
-  <li class="list-group-item list-group-item-light"><Link to="/admin/eventManage/create" className="nav-link text-success"> Create Event Manager</Link></li>
-  <li class="list-group-item list-group-item-light"><Link to="/admin/eventManage/manage" className="nav-link text-success"> Manage Event Manager</Link></li>
-  <li class="list-group-item list-group-item-light"><Link to="/admin/events/create" className="nav-link text-success"> Create Events</Link></li>
-  <li class="list-group-item list-group-item-light"><Link to="/admin/events/manage" className="nav-link text-success">Manage Events</Link></li>
-  <li class="list-group-item list-group-item-light"><Link to="/admin/students/event" className="nav-link text-success"> Manage Students</Link></li>
+      <button
+        type="submit"
+        onClick={onSubmit}
+        className="btn btn-outline-success mb-3"
+      >
+        Create Product
+      </button>
+    </form>
+  );
 
-  </ul>
-   
-  
-  </div>
-</div>
-        )
-    }
-    const adminRight=()=>{
-        return(
-            <div class="card offset-1"  >
-            <div class="card-header bg-dark text-white ">
-             Add the Event Managers
-            </div>
-            {createProductForm()}
-          </div>
-        )
-
-    }
-    return (
-        <Base title="Welcome to the admin dashboard">
-                  <ToastContainer />
-            <div class="container bg-info">
-                <div className="row p-4 ">
-                <div class="col-sm-12 col-lg-4">
-                {adminLeftSide()}   
-                    </div>
-                    <div class="col-sm-12 col-lg-8">
-                {adminRight()}   
-                    </div>
-                    </div>
-            </div>
-        
-        </Base>
-    )
-}
+  return (
+    <>
+      <Link to="/admin/dashboard" className="btn btn-md btn-dark mb-3">
+        Admin Home
+      </Link>
+      <div className="row bg-dark text-white rounded">
+        <div className="col-md-8 offset-md-2">
+         
+          {createProductForm()}
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default CreateEvents;
-
-

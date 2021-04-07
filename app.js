@@ -90,10 +90,10 @@ app.use('/api', eventRoutes);
 app.use('/api', orderRoutes);
 app.use('/api',userRoutes);
 const PORT = process.env.PORT||8800; 
-
+app.use(express.static('public'));
 if(process.env.NODE_ENV=="production"){
     app.use(express.static('frontend/build'))
-    const path = require('path')
+    const path = require('path');
     app.get("*",(req,res)=>{
         res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
     })

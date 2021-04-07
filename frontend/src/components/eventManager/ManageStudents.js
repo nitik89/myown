@@ -11,6 +11,7 @@ function ManageStudents() {
     const [students,setStudents]=useState([]);
     const user=JSON.parse(localStorage.getItem("user"));
     const token=localStorage.getItem("jwt");
+    console.log(students);
     useEffect(()=>{
         if(state?._id){
             getMyStudents(state?._id,token).then(data=>{
@@ -51,9 +52,9 @@ function ManageStudents() {
             </div>
             <ul class="list-group list-group-flush spanner">
                 {students?.map(evnts=>{
-                   return  evnts.enrolledStudents.map(student=>{
+                   return  evnts.enrolledStudents.map((student,idx)=>{
                         return <li class="list-group-item spanner">
-                            Name: {student.firstname} {student.lastname}  Year: {student.year}  Contact_no: {student.contact_no}
+                            Name: {student.firstname} {student.lastname}  Year: {student.year}  Contact_no: {student.contact_no} Email:{student.email}
                         </li>
                     })
                 })}

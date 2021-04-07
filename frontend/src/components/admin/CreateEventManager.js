@@ -21,6 +21,8 @@ function CreateEventManager() {
      
      
     });
+    
+    console.log(values);
     const {firstname,lastname,rollno,email,password,year,contact_no}=values;
   
     const handleChange=event=>{

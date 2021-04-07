@@ -13,6 +13,12 @@ export const reducer = (state, action) => {
 
         return {...state, cart: [...action.payload] }
     }
+    if(action.type==="UPDATETHEEVENTS"){
+        
+        return {...state,events:[...action.payload]};
+      
+
+    }
     if(action.type==='CLEARCART'){
        
         return {...state,cart:[]};
