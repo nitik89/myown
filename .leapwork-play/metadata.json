@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-02T10:28:25.222Z",
+  "repo": {
+    "connectorId": 14,
+    "repoSlug": "nitik89/myown",
+    "baseBranch": "main"
+  },
+  "team": {
+    "assetId": 1,
+    "displayId": "TM-1",
+    "name": "My Team"
+  },
+  "tree": [
+    {
+      "assetId": 129,
+      "displayId": "FD-11",
+      "name": "New folder",
+      "kind": "folder",
+      "children": [
+        {
+          "assetId": 463,
+          "displayId": "FD-47",
+          "name": "Calculation History Review and Re-run",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 466,
+              "displayId": "TC-156",
+              "name": "Exclude Failed Calculations from History",
+              "kind": "test-case",
+              "repoPath": "New folder/Calculation History Review and Re-run/TC-156-Exclude-Failed-Calculations-from-History.spec.ts"
+            }
+          ]
+        },
+        {
+          "assetId": 383,
+          "displayId": "FD-35",
+          "name": "Calculation History Workflows",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 386,
+              "displayId": "TC-90",
+              "name": "Empty calculation history is handled correctly",
+              "kind": "test-case",
+              "repoPath": "New folder/Calculation History Workflows/TC-90-Empty-calculation-history-is-handled-correctly.spec.ts"
+            }
+          ]
+        },
+        {
+          "assetId": 390,
+          "displayId": "FD-36",
+          "name": "Calculator Memory Functions",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 507,
+              "displayId": "TC-192",
+              "name": "Accumulate values with repeated M+ operations",
+              "kind": "test-case",
+              "repoPath": "New folder/Calculator Memory Functions/TC-192-Accumulate-values-with-repeated-M+-operations.spec.ts"
+            }
+          ]
+        },
+        {
+          "assetId": 511,
+          "displayId": "FD-53",
+          "name": "GitHub Review Webhook Intake",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 514,
+              "displayId": "TC-198",
+              "name": "Acknowledge accepted webhook before review completion",
+              "kind": "test-case",
+              "repoPath": "New folder/GitHub Review Webhook Intake/TC-198-Acknowledge-accepted-webhook-before-review-completion.spec.ts"
+            }
+          ]
+        },
+        {
+          "assetId": 475,
+          "displayId": "FD-49",
+          "name": "Webhook Event Validation and Filtering",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 477,
+              "displayId": "TC-165",
+              "name": "Accept synchronized pull request webhook",
+              "kind": "test-case",
+              "repoPath": "New folder/Webhook Event Validation and Filtering/TC-165-Accept-synchronized-pull-request-webhook.spec.ts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "assetId": 149,
+      "displayId": "FD-18",
+      "name": "Security Issue Scanning",
+      "kind": "folder",
+      "children": [
+        {
+          "assetId": 157,
+          "displayId": "TC-53",
+          "name": "Avoid false positives for safely handled security-sensitive code",
+          "kind": "test-case",
+          "repoPath": "Security Issue Scanning/TC-53-Avoid-false-positives-for-safely-handled-security-sensitive-code.spec.ts"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "assetId": 466,
+      "assetKind": "test-case",
+      "displayId": "TC-156",
+      "name": "Exclude Failed Calculations from History",
+      "repoPath": "New folder/Calculation History Review and Re-run/TC-156-Exclude-Failed-Calculations-from-History.spec.ts",
+      "parentAssetId": 463
+    },
+    {
+      "assetId": 386,
+      "assetKind": "test-case",
+      "displayId": "TC-90",
+      "name": "Empty calculation history is handled correctly",
+      "repoPath": "New folder/Calculation History Workflows/TC-90-Empty-calculation-history-is-handled-correctly.spec.ts",
+      "parentAssetId": 383
+    },
+    {
+      "assetId": 507,
+      "assetKind": "test-case",
+      "displayId": "TC-192",
+      "name": "Accumulate values with repeated M+ operations",
+      "repoPath": "New folder/Calculator Memory Functions/TC-192-Accumulate-values-with-repeated-M+-operations.spec.ts",
+      "parentAssetId": 390
+    },
+    {
+      "assetId": 514,
+      "assetKind": "test-case",
+      "displayId": "TC-198",
+      "name": "Acknowledge accepted webhook before review completion",
+      "repoPath": "New folder/GitHub Review Webhook Intake/TC-198-Acknowledge-accepted-webhook-before-review-completion.spec.ts",
+      "parentAssetId": 511
+    },
+    {
+      "assetId": 477,
+      "assetKind": "test-case",
+      "displayId": "TC-165",
+      "name": "Accept synchronized pull request webhook",
+      "repoPath": "New folder/Webhook Event Validation and Filtering/TC-165-Accept-synchronized-pull-request-webhook.spec.ts",
+      "parentAssetId": 475
+    },
+    {
+      "assetId": 157,
+      "assetKind": "test-case",
+      "displayId": "TC-53",
+      "name": "Avoid false positives for safely handled security-sensitive code",
+      "repoPath": "Security Issue Scanning/TC-53-Avoid-false-positives-for-safely-handled-security-sensitive-code.spec.ts",
+      "parentAssetId": 149
+    }
+  ]
+}
