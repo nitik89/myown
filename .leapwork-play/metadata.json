@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-02T10:28:25.222Z",
+  "generatedAt": "2026-11-03T10:25:28.114Z",
   "repo": {
     "connectorId": 14,
     "repoSlug": "nitik89/myown",
@@ -60,6 +60,13 @@
               "name": "Accumulate values with repeated M+ operations",
               "kind": "test-case",
               "repoPath": "New folder/Calculator Memory Functions/TC-192-Accumulate-values-with-repeated-M+-operations.spec.ts"
+            },
+            {
+              "assetId": 510,
+              "displayId": "TC-195",
+              "name": "Subtract a value from memory with M-",
+              "kind": "test-case",
+              "repoPath": "New folder/Calculator Memory Functions/TC-195-Subtract-a-value-from-memory-with-M.spec.ts"
             }
           ]
         },
@@ -75,6 +82,28 @@
               "name": "Acknowledge accepted webhook before review completion",
               "kind": "test-case",
               "repoPath": "New folder/GitHub Review Webhook Intake/TC-198-Acknowledge-accepted-webhook-before-review-completion.spec.ts"
+            }
+          ]
+        },
+        {
+          "assetId": 451,
+          "displayId": "FD-45",
+          "name": "Memory Operations",
+          "kind": "folder",
+          "children": [
+            {
+              "assetId": 452,
+              "displayId": "TC-144",
+              "name": "Store and recall a positive memory value",
+              "kind": "test-case",
+              "repoPath": "New folder/Memory Operations/TC-144-Store-and-recall-a-positive-memory-value.spec.ts"
+            },
+            {
+              "assetId": 453,
+              "displayId": "TC-145",
+              "name": "Subtract negative and decimal values from memory",
+              "kind": "test-case",
+              "repoPath": "New folder/Memory Operations/TC-145-Subtract-negative-and-decimal-values-from-memory.spec.ts"
             }
           ]
         },
@@ -137,12 +166,36 @@
       "parentAssetId": 390
     },
     {
+      "assetId": 510,
+      "assetKind": "test-case",
+      "displayId": "TC-195",
+      "name": "Subtract a value from memory with M-",
+      "repoPath": "New folder/Calculator Memory Functions/TC-195-Subtract-a-value-from-memory-with-M.spec.ts",
+      "parentAssetId": 390
+    },
+    {
       "assetId": 514,
       "assetKind": "test-case",
       "displayId": "TC-198",
       "name": "Acknowledge accepted webhook before review completion",
       "repoPath": "New folder/GitHub Review Webhook Intake/TC-198-Acknowledge-accepted-webhook-before-review-completion.spec.ts",
       "parentAssetId": 511
+    },
+    {
+      "assetId": 452,
+      "assetKind": "test-case",
+      "displayId": "TC-144",
+      "name": "Store and recall a positive memory value",
+      "repoPath": "New folder/Memory Operations/TC-144-Store-and-recall-a-positive-memory-value.spec.ts",
+      "parentAssetId": 451
+    },
+    {
+      "assetId": 453,
+      "assetKind": "test-case",
+      "displayId": "TC-145",
+      "name": "Subtract negative and decimal values from memory",
+      "repoPath": "New folder/Memory Operations/TC-145-Subtract-negative-and-decimal-values-from-memory.spec.ts",
+      "parentAssetId": 451
     },
     {
       "assetId": 477,
